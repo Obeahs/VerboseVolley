@@ -1,8 +1,10 @@
 class Product < ApplicationRecord
   belongs_to :category
-  has_one_attached :image
+  has_many :products_carts
+  has_many :carts, through: :products_carts
 
-  validates :product_name, :category_id, :price, :availability, :description, presence: true
+  validates :product_name, presence: true
+  validates :price, presence: true
 
   def self.ransackable_associations(auth_object = nil)
     ["category"]
