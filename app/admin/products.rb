@@ -1,36 +1,31 @@
 ActiveAdmin.register Product do
-  remove_filter :image_attachment, :image_blob
-  permit_params :product_name, :category_id, :availability, :price, :description, :image
-
-  filter :product_name
-  filter :category
-  filter :availability
-  filter :price
-  filter :description
+  remove_filter :image_attachment, :image_blob, :products_carts
+  permit_params :product_name, :category_id, :availability, :price, :image, :description
 
   form do |f|
     f.inputs do
       f.input :product_name
-      f.input :category
+      f.input :category, as: :select, collection: Category.all.collect { |c| [c.category_name, c.id] }  # Use category_name instead of name
       f.input :availability
       f.input :price
-      f.input :description
       f.input :image, as: :file
+      f.input :description
     end
     f.actions
   end
 
-  show do
-    attributes_table do
-      row :product_name
-      row :category
-      row :availability
-      row :price
-      row :description
-      row :image do |product|
-        image_tag url_for(product.image) if product.image.attached?
+  index do
+    selectable_column
+    id_column
+    column :product_name
+    column :category
+    column :availability
+    column :price
+    column :image do |product|
+      if product.image.attached?
+        image_tag url_for(product.image.variant(resize_to_limit: [50, 50]))
       end
     end
-    active_admin_comments
+    actions
   end
 end

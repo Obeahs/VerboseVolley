@@ -1,10 +1,16 @@
-<p style="color: green"><%= notice %></p>
+<h1><%= @product.product_name %></h1>
 
-<%= render @product %>
+<p><strong>Category:</strong> <%= @product.category&.category_name %></p>
+<p><strong>Availability:</strong> <%= @product.availability ? 'Available' : 'Not Available' %></p>
+<p><strong>Price:</strong> $<%= @product.price %></p>
+<p><strong>Description:</strong> <%= @product.description %></p>
 
-<div>
-  <%= link_to "Edit this product", edit_product_path(@product) %> |
-  <%= link_to "Back to products", products_path %>
+<% if @product.image.attached? %>
+  <p><strong>Image:</strong></p>
+  <%= image_tag @product.image %>
+<% else %>
+  <p><strong>Image:</strong> No image available</p>
+<% end %>
 
-  <%= button_to "Destroy this product", @product, method: :delete %>
-</div>
+<%= link_to 'Edit', edit_product_path(@product) %> |
+<%= link_to 'Back', products_path %>

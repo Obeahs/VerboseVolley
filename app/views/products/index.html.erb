@@ -1,16 +1,38 @@
-<p style="color: green"><%= notice %></p>
-
-<% content_for :title, "Products" %>
-
 <h1>Products</h1>
 
-<div id="products">
-  <% @products.each do |product| %>
-    <%= render product %>
-    <p>
-      <%= link_to "Show this product", product %>
-    </p>
-  <% end %>
-</div>
+<%= link_to 'New Product', new_product_path %>
 
-<%= link_to "New product", new_product_path %>
+<table>
+  <thead>
+    <tr>
+      <th>Product Name</th>
+      <th>Image</th>
+      <th>Category</th>
+      <th>Availability</th>
+      <th>Price</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @products.each do |product| %>
+      <tr>
+        <td><%= product.product_name %></td>
+        <td>
+          <% if product.image.attached? %>
+            <%= image_tag product.image.variant(resize_to_limit: [100, 100]) %>
+          <% else %>
+            No image
+          <% end %>
+        </td>
+        <td><%= product.category&.category_name %></td>
+        <td><%= product.availability ? 'Available' : 'Not Available' %></td>
+        <td><%= number_to_currency(product.price) %></td>
+        <td>
+          <%= link_to 'Show', product_path(product) %> |
+          <%= link_to 'Edit', edit_product_path(product) %> |
+          <%= link_to 'Delete', product_path(product), method: :delete, data: { confirm: 'Are you sure?' } %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
