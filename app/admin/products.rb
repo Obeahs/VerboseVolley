@@ -2,6 +2,12 @@ ActiveAdmin.register Product do
   remove_filter :image_attachment, :image_blob
   permit_params :product_name, :category_id, :availability, :price, :description, :image
 
+  filter :product_name
+  filter :category
+  filter :availability
+  filter :price
+  filter :description
+
   form do |f|
     f.inputs do
       f.input :product_name
@@ -28,4 +34,3 @@ ActiveAdmin.register Product do
     active_admin_comments
   end
 end
-
