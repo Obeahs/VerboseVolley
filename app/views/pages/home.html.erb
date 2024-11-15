@@ -1,2 +1,15 @@
-<h1>Pages#home</h1>
-<p>Find me in app/views/pages/home.html.erb</p>
+<!-- app/views/pages/home.html.erb -->
+<h1>Welcome to Verbose Volley</h1>
+<h2>Our Products</h2>
+
+<div class="products-list">
+  <% @products.each do |product| %>
+    <div class="product-item">
+      <h3><%= link_to product.product_name, product_path(product) %></h3>
+      <p><%= number_to_currency(product.price) %></p>
+      <%= image_tag url_for(product.image), size: "200x200" if product.image.attached? %>
+    </div>
+  <% end %>
+</div>
+
+<%= will_paginate @products %> <!-- Pagination -->

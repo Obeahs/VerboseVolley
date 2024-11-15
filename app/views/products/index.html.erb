@@ -1,38 +1,17 @@
-<h1>Products</h1>
+<!-- app/views/products/index.html.erb -->
+<h1>Products by Category</h1>
 
-<%= link_to 'New Product', new_product_path %>
+<%= select_tag :category, options_from_collection_for_select(Category.all, :id, :category_name), prompt: "Choose a category" %>
+<%= button_to "Filter", products_path(category: params[:category]) %>
 
-<table>
-  <thead>
-    <tr>
-      <th>Product Name</th>
-      <th>Image</th>
-      <th>Category</th>
-      <th>Availability</th>
-      <th>Price</th>
-      <th>Actions</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @products.each do |product| %>
-      <tr>
-        <td><%= product.product_name %></td>
-        <td>
-          <% if product.image.attached? %>
-            <%= image_tag product.image.variant(resize_to_limit: [100, 100]) %>
-          <% else %>
-            No image
-          <% end %>
-        </td>
-        <td><%= product.category&.category_name %></td>
-        <td><%= product.availability ? 'Available' : 'Not Available' %></td>
-        <td><%= number_to_currency(product.price) %></td>
-        <td>
-          <%= link_to 'Show', product_path(product) %> |
-          <%= link_to 'Edit', edit_product_path(product) %> |
-          <%= link_to 'Delete', product_path(product), method: :delete, data: { confirm: 'Are you sure?' } %>
-        </td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<div class="products-list">
+  <% @products.each do |product| %>
+    <div class="product-item">
+      <h3><%= link_to product.product_name, product_path(product) %></h3>
+      <p><%= number_to_currency(product.price) %></p>
+      <%= image_tag url_for(product.image), size: "200x200" if product.image.attached? %>
+    </div>
+  <% end %>
+</div>
+
+<%= will_paginate @products %>
