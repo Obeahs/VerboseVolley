@@ -1,19 +1,11 @@
 ActiveAdmin.register Page do
-  permit_params :name, :content
+  permit_params :title, :content
 
   form do |f|
     f.inputs do
-      f.input :name
-      f.input :content
+      f.input :title
+      f.input :content, as: :text
     end
     f.actions
-  end
-
-  show do
-    attributes_table do
-      row :name
-      row :content
-    end
-    active_admin_comments
   end
 end

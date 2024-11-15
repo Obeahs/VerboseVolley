@@ -8,3 +8,10 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password') if Rails.env.development?
+
+
+category1 = Category.create!(category_name: "Volleyballs")
+category2 = Category.create!(category_name: "Shoes")
+
+Product.create!(product_name: "Volleyball", price: 20.00, description: "volleyball", category: category1)
+Product.create!(product_name: "Shoes", price: 50.00, description: "Shoes for volleyball", category: category2)
