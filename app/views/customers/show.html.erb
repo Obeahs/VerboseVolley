@@ -1,10 +1,17 @@
 <p style="color: green"><%= notice %></p>
 
-<%= render @customer %>
+<article id="<%= dom_id(@customer) %>">
+  <h2>Customer Details</h2>
 
-<div>
-  <%= link_to "Edit this customer", edit_customer_path(@customer) %> |
-  <%= link_to "Back to customers", customers_path %>
+  <p><strong>Customer name:</strong> <%= @customer.customer_name %></p>
+  <p><strong>Email:</strong> <%= @customer.email %></p>
+  <p><strong>Password:</strong> <%= @customer.password %></p>
+  <p><strong>Phone number:</strong> <%= @customer.phone_number %></p>
 
-  <%= button_to "Destroy this customer", @customer, method: :delete %>
-</div>
+  <div class="actions">
+    <%= link_to "Edit this customer", edit_customer_path(@customer), class: "btn btn-primary" %> |
+    <%= link_to "Back to customers", customers_path, class: "btn btn-secondary" %>
+
+    <%= button_to "Destroy this customer", @customer, method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger" %>
+  </div>
+</article>

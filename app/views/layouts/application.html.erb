@@ -1,9 +1,14 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Verbose Volley - Volleyball Equipment, Gear, and Accessories">
   <title>Verbose Volley</title>
+  
   <%= csrf_meta_tags %>
   <%= csp_meta_tag %>
+  
   <%= stylesheet_link_tag 'application', media: 'all' %>
   <%= javascript_include_tag 'application' %>
 </head>
@@ -11,16 +16,22 @@
 <body>
   <header>
     <nav>
-      <ul>
-        <li><%= link_to 'Home', root_path %></li>
-        <li><%= link_to 'Products', products_path %></li> <!-- Link to Products -->
-        <li><%= link_to 'Categories', categories_path %></li> <!-- Link to Categories -->
-        <li><%= link_to 'About', about_path %></li>
-        <li><%= link_to 'Contact', contact_path %></li>
+      <ul class="nav-list">
+        <li><%= link_to 'Home', root_path, class: 'nav-item' %></li>
+        <li><%= link_to 'Products', products_path, class: 'nav-item' %></li>
+        <li><%= link_to 'Categories', categories_path, class: 'nav-item' %></li>
+        <li><%= link_to 'About', about_path, class: 'nav-item' %></li>
+        <li><%= link_to 'Contact', contact_path, class: 'nav-item' %></li>
       </ul>
     </nav>
   </header>
 
-  <%= yield %> <!-- This renders the page content -->
+  <main>
+    <%= yield %> <!-- This renders the page content -->
+  </main>
+
+  <footer>
+    <p>&copy; <%= Time.now.year %> Verbose Volley. All Rights Reserved.</p>
+  </footer>
 </body>
 </html>

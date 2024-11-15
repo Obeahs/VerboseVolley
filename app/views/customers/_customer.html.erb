@@ -1,22 +1,27 @@
-<div id="<%= dom_id customer %>">
-  <p>
-    <strong>Customer name:</strong>
-    <%= customer.customer_name %>
-  </p>
+<div id="<%= dom_id(customer) %>">
+  <section>
+    <h2>Customer Details</h2>
 
-  <p>
-    <strong>Email:</strong>
-    <%= customer.email %>
-  </p>
+    <div class="customer-info">
+      <p>
+        <strong>Customer name:</strong>
+        <%= customer.customer_name %>
+      </p>
 
-  <p>
-    <strong>Password:</strong>
-    <%= customer.password %>
-  </p>
+      <p>
+        <strong>Email:</strong>
+        <%= customer.email %>
+      </p>
 
-  <p>
-    <strong>Phone number:</strong>
-    <%= customer.phone_number %>
-  </p>
+      <p>
+        <strong>Password:</strong>
+        <%= customer.password %>
+      </p>
 
+      <p>
+        <strong>Phone number:</strong>
+        <%= customer.phone_number %>
+      </p>
+    </div>
+  </section>
 </div>

@@ -1,7 +1,6 @@
 ActiveAdmin.register Category do
   permit_params :category_name
 
-  # Custom action for deleting all categories
   action_item :delete_all, only: :index do
     link_to 'Delete All', delete_all_admin_categories_path, method: :delete, data: { confirm: 'Are you sure you want to delete all categories?' }
   end

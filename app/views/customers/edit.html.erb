@@ -1,12 +1,10 @@
-<% content_for :title, "Editing customer" %>
+<% content_for :title, "Editing Customer" %>
 
-<h1>Editing customer</h1>
+<h1>Editing Customer</h1>
 
 <%= render "form", customer: @customer %>
 
-<br>
-
-<div>
-  <%= link_to "Show this customer", @customer %> |
-  <%= link_to "Back to customers", customers_path %>
+<div class="actions">
+  <%= link_to "Show this customer", @customer, class: "btn btn-info" %> |
+  <%= link_to "Back to Customers", customers_path, class: "btn btn-secondary" %>
 </div>

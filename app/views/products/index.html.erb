@@ -1,17 +1,23 @@
 <!-- app/views/products/index.html.erb -->
-<h1>Filter Products</h1>
+<h1>All Products</h1>
 
 <%= form_with url: products_path, method: :get, local: true do |f| %>
   <div>
-    <%= f.check_box :on_sale, id: 'on_sale' %>
+    <%= f.text_field :search, placeholder: "Search products by name", value: params[:search] %>
+  </div>
+  <div>
+    <%= f.select :category_id, options_from_collection_for_select(@categories, :id, :category_name), prompt: "Select Category", selected: params[:category_id] %>
+  </div>
+  <div>
+    <%= f.check_box :on_sale, { checked: params[:on_sale] == 'true' }, 'true', 'false' %>
     <%= f.label :on_sale, "On Sale" %>
   </div>
   <div>
-    <%= f.check_box :new_arrival, id: 'new_arrival' %>
-    <%= f.label :new_arrival, "New Arrivals" %>
+    <%= f.check_box :new_arrival, { checked: params[:new_arrival] == 'true' }, 'true', 'false' %>
+    <%= f.label :new_arrival, "New Arrival" %>
   </div>
   <div>
-    <%= f.check_box :recently_updated, id: 'recently_updated' %>
+    <%= f.check_box :recently_updated, { checked: params[:recently_updated] == 'true' }, 'true', 'false' %>
     <%= f.label :recently_updated, "Recently Updated" %>
   </div>
   <%= f.submit "Filter" %>
@@ -27,4 +33,4 @@
   <% end %>
 </div>
 
-<%= paginate @products %>  <!-- Use Kaminari's pagination here -->
+<%= paginate @products %> <!-- Pagination with Kaminari -->
