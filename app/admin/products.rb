@@ -23,7 +23,7 @@ ActiveAdmin.register Product do
     selectable_column
     column :product_name
     column :category_name, sortable: 'categories.category_name' do |product|
-      product.category.category_name  # Display the category name
+      product.category.category_name  
     end
     column :availability
     column :price
@@ -35,12 +35,11 @@ ActiveAdmin.register Product do
     actions
   end
 
-  # Show details page
   show do
     attributes_table do
       row :product_name
       row :category do |product|
-        product.category.category_name  # Display the category name
+        product.category.category_name  
       end
       row :availability
       row :price

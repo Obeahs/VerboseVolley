@@ -19,5 +19,8 @@ Rails.application.routes.draw do
   resources :categories, only: [:index, :show, :new, :edit, :create, :update, :destroy] 
   resources :pages, only: [:show, :edit, :update] 
   
-  root to: 'pages#home'
+  root 'pages#home'
+
+  get 'about', to: 'pages#about'
+  get 'contact', to: 'pages#contact'
 end
