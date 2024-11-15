@@ -1,8 +1,21 @@
 <!-- app/views/products/index.html.erb -->
-<h1>Products by Category</h1>
+<h1>Filter Products</h1>
 
-<%= select_tag :category, options_from_collection_for_select(Category.all, :id, :category_name), prompt: "Choose a category" %>
-<%= button_to "Filter", products_path(category: params[:category]) %>
+<%= form_with url: products_path, method: :get, local: true do |f| %>
+  <div>
+    <%= f.check_box :on_sale, id: 'on_sale' %>
+    <%= f.label :on_sale, "On Sale" %>
+  </div>
+  <div>
+    <%= f.check_box :new_arrival, id: 'new_arrival' %>
+    <%= f.label :new_arrival, "New Arrivals" %>
+  </div>
+  <div>
+    <%= f.check_box :recently_updated, id: 'recently_updated' %>
+    <%= f.label :recently_updated, "Recently Updated" %>
+  </div>
+  <%= f.submit "Filter" %>
+<% end %>
 
 <div class="products-list">
   <% @products.each do |product| %>
@@ -14,4 +27,4 @@
   <% end %>
 </div>
 
-<%= will_paginate @products %>
+<%= paginate @products %>  <!-- Use Kaminari's pagination here -->

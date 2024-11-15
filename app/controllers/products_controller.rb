@@ -3,14 +3,20 @@ class ProductsController < ApplicationController
 
   # GET /products or /products.json
   def index
+    # Build the base query
     @products = Product.all
 
-    # Filter products based on the conditions
-    @products = @products.where(on_sale: true) if params[:on_sale]
-    @products = @products.where(new_arrival: true) if params[:new_arrival]
-    @products = @products.where('updated_at > ?', 1.month.ago) if params[:recently_updated]
+    # Filter by "On Sale"
+    @products = @products.where(on_sale: true) if params[:on_sale].present?
 
-    @products = @products.page(params[:page]).per(10)
+    # Filter by "New Arrivals" (assuming you have a 'new_arrival' boolean field)
+    @products = @products.where(new_arrival: true) if params[:new_arrival].present?
+
+    # Filter by "Recently Updated" (assuming you have a 'recently_updated' boolean field)
+    @products = @products.order(updated_at: :desc) if params[:recently_updated].present?
+
+    # Paginate the results
+    @products = @products.page(params[:page]).per(10)  # Adjust the per count as needed
   end
 
   # GET /products/1 or /products/1.json
