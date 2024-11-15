@@ -14,7 +14,6 @@
 </head>
 
 <body>
-  <header>
     <nav>
       <ul class="nav-list">
         <li><%= link_to 'Home', root_path, class: 'nav-item' %></li>
@@ -24,14 +23,13 @@
         <li><%= link_to 'Contact', contact_path, class: 'nav-item' %></li>
       </ul>
     </nav>
-  </header>
 
   <main>
     <%= yield %> <!-- This renders the page content -->
   </main>
 
   <footer>
-    <p>&copy; <%= Time.now.year %> Verbose Volley. All Rights Reserved.</p>
+    <p>VerboseVolley</p>
   </footer>
 </body>
 </html>

@@ -1,6 +1,15 @@
-<!-- app/views/products/show.html.erb -->
 <h1><%= @product.product_name %></h1>
-<p><%= number_to_currency(@product.price) %></p>
-<p><%= @product.description %></p>
 
-<%= image_tag url_for(@product.image) if @product.image.attached? %>
+<p><strong>Price:</strong> <%= number_to_currency(@product.price) %></p>
+
+<p><strong>Description:</strong> <%= @product.description %></p>
+
+<% if @product.image.attached? %>
+  <div class="product-image">
+    <%= image_tag url_for(@product.image), alt: @product.product_name %>
+  </div>
+<% end %>
+
+<div class="product-actions">
+  <%= link_to 'Back to Products', products_path, class: 'btn btn-secondary' %>
+</div>

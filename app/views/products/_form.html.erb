@@ -1,50 +1,52 @@
 <%= form_with(model: @product, local: true) do |f| %>
-  <div>
-    <%= f.label :product_name %>
-    <%= f.text_field :product_name %>
-  </div>
+  <section>
+    <div>
+      <%= f.label :product_name, "Product Name" %>
+      <%= f.text_field :product_name, required: true, aria: { label: "Product Name" } %>
+    </div>
 
-  <div>
-    <%= f.label :category %>
-    <%= f.collection_select :category_id, Category.all, :id, :category_name %>
-  </div>
+    <div>
+      <%= f.label :category, "Category" %>
+      <%= f.collection_select :category_id, Category.all, :id, :category_name, { prompt: "Select a Category" }, required: true %>
+    </div>
 
-  <div>
-    <%= f.label :availability %>
-    <%= f.select :availability, [['Available', true], ['Unavailable', false]], { include_blank: true }, { class: 'form-control' } %>
-  </div>
+    <div>
+      <%= f.label :availability, "Availability" %>
+      <%= f.select :availability, [['Available', true], ['Unavailable', false]], { include_blank: "Choose availability" }, class: "form-control", required: true %>
+    </div>
 
-  <div>
-    <%= f.label :price %>
-    <%= f.text_field :price %>
-  </div>
+    <div>
+      <%= f.label :price, "Price" %>
+      <%= f.number_field :price, step: 0.01, min: 0, required: true, aria: { label: "Price" }, placeholder: "Enter the price" %>
+    </div>
 
-  <div>
-    <%= f.label :image %>
-    <%= f.file_field :image %>
-  </div>
+    <div>
+      <%= f.label :image, "Product Image" %>
+      <%= f.file_field :image, accept: "image/*", aria: { label: "Product Image" } %>
+    </div>
 
-  <div>
-    <%= f.label :description %>
-    <%= f.text_area :description %>
-  </div>
+    <div>
+      <%= f.label :description, "Description" %>
+      <%= f.text_area :description, rows: 4, required: true, aria: { label: "Description" }, placeholder: "Enter product description" %>
+    </div>
 
-  <div>
-    <%= f.label :on_sale %>
-    <%= f.check_box :on_sale %>
-  </div>
+    <div>
+      <%= f.label :on_sale, "On Sale?" %>
+      <%= f.check_box :on_sale %>
+    </div>
 
-  <div>
-    <%= f.label :new_arrival %>
-    <%= f.check_box :new_arrival %>
-  </div>
+    <div>
+      <%= f.label :new_arrival, "New Arrival?" %>
+      <%= f.check_box :new_arrival %>
+    </div>
 
-  <div>
-    <%= f.label :recently_updated %>
-    <%= f.check_box :recently_updated %>
-  </div>
+    <div>
+      <%= f.label :recently_updated, "Recently Updated?" %>
+      <%= f.check_box :recently_updated %>
+    </div>
 
-  <div>
-    <%= f.submit %>
-  </div>
+    <div>
+      <%= f.submit "Save Product", class: "btn btn-primary" %>
+    </div>
+  </section>
 <% end %>

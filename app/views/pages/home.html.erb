@@ -1,19 +1,32 @@
-<!-- app/views/pages/home.html.erb -->
-<h1>Welcome to Verbose Volley</h1>
-<h2>Our Products</h2>
+<%= content_for :title, "Welcome to VerboseVolley" %>
 
-<% if @products.present? %>
-  <div class="products-list">
-    <% @products.each do |product| %>
-      <div class="product-item">
-        <h3><%= link_to product.product_name, product_path(product) %></h3>
-        <p><%= number_to_currency(product.price) %></p>
-        <%= image_tag url_for(product.image), size: "200x200" if product.image.attached? %>
+<main>
+  <header>
+    <h1>Welcome to Verbose Volley</h1>
+    <h2>Our Products</h2>
+  </header>
+
+  <section>
+    <% if @products.present? %>
+      <div class="products-list">
+        <% @products.each do |product| %>
+          <article class="product-item">
+            <header>
+              <h3><%= link_to product.product_name, product_path(product) %></h3>
+            </header>
+            <p><%= number_to_currency(product.price) %></p>
+            <% if product.image.attached? %>
+              <%= image_tag url_for(product.image), alt: "#{product.product_name} image", size: "200x200" %>
+            <% end %>
+          </article>
+        <% end %>
       </div>
-    <% end %>
-  </div>
 
-  <%= paginate @products %>
-<% else %>
-  <p>No products available at the moment.</p>
-<% end %>
+      <div class="pagination">
+        <%= paginate @products %>
+      </div>
+    <% else %>
+      <p>No products available at the moment.</p>
+    <% end %>
+  </section>
+</main>
