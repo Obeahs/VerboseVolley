@@ -3,7 +3,6 @@ ActiveAdmin.register Category do
 
   index do
     selectable_column
-    id_column
     column :category_name
     actions
   end
