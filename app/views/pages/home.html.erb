@@ -1,32 +1,31 @@
 <%= content_for :title, "Welcome to VerboseVolley" %>
 
-<main>
-  <header>
-    <h1>Welcome to Verbose Volley</h1>
-    <h2>Our Products</h2>
-  </header>
 
-  <section>
-    <% if @products.present? %>
-      <div class="products-list">
-        <% @products.each do |product| %>
-          <article class="product-item">
-            <header>
-              <h3><%= link_to product.product_name, product_path(product) %></h3>
-            </header>
-            <p><%= number_to_currency(product.price) %></p>
-            <% if product.image.attached? %>
-              <%= image_tag url_for(product.image), alt: "#{product.product_name} image", size: "200x200" %>
-            <% end %>
-          </article>
-        <% end %>
-      </div>
+<header>
+  <h1>Welcome to Verbose Volley</h1>
+  <h2>Our Products</h2>
+</header>
 
-      <div class="pagination">
-        <%= paginate @products %>
-      </div>
-    <% else %>
-      <p>No products available at the moment.</p>
-    <% end %>
-  </section>
-</main>
+<section>
+  <% if @products.present? %>
+    <div class="products-list">
+      <% @products.each do |product| %>
+        <article class="product-item">
+          <header>
+            <h3><%= link_to product.product_name, product_path(product) %></h3>
+          </header>
+          <p><%= number_to_currency(product.price) %></p>
+          <% if product.image.attached? %>
+            <%= image_tag url_for(product.image), alt: "#{product.product_name} image", size: "200x200" %>
+          <% end %>
+        </article>
+      <% end %>
+    </div>
+
+    <div class="pagination">
+      <%= paginate @products %>
+    </div>
+  <% else %>
+    <p>No products available at the moment.</p>
+  <% end %>
+</section>
