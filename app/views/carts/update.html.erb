@@ -1,0 +1,5 @@
+<%= form_with url: update_cart_path(id), method: :put, local: true do |form| %>
+    <%= form.number_field :quantity, value: quantity, min: 1 %>
+    <%= form.submit 'Update' %>
+  <% end %>
+  

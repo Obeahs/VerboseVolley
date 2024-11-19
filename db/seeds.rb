@@ -10,12 +10,29 @@
 # AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password') if Rails.env.development?
 
 # categories = [
-#   'Volleyballs',
+  #   'Volleyballs',
 #   'Knee Pads',
 #   'Jerseys',
 #   'Shoes',
 #   'Accessories'
 # ]
+
+# category = Category.find_or_create_by!(category_name: category_name)
+
+# def determine_category(name)
+#   case name.downcase
+#   when /volleyball/
+#     'Volleyballs'
+#   when /knee pad/
+#     'Knee Pads'
+#   when /jersey/
+#     'Jerseys'
+#   when /shoe/
+#     'Shoes'
+#   else
+#     'Accessories'
+#   end
+# end
 
 # categories.each do |category_name|
 #   Category.create!(category_name: category_name)
@@ -55,28 +72,11 @@
 
 require 'csv'
 
-def determine_category(name)
-  case name.downcase
-  when /volleyball/
-    'Volleyballs'
-  when /knee pad/
-    'Knee Pads'
-  when /jersey/
-    'Jerseys'
-  when /shoe/
-    'Shoes'
-  else
-    'Accessories'
-  end
-end
-
 filepath = Rails.root.join('db', 'FIVB scraped.csv')
 
 CSV.foreach(filepath, headers: true) do |row|
   category_name = determine_category(row['Name'])
-
-  category = Category.find_or_create_by!(category_name: category_name)
-
+  
   Product.create!(
     product_name: row['Name'],
     category_id: category.id,
@@ -86,7 +86,5 @@ CSV.foreach(filepath, headers: true) do |row|
     on_sale: false, 
     new_arrival: true, 
     recently_updated: false  
-  )
-end
-
-
+    )
+  end

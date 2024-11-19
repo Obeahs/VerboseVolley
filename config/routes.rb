@@ -11,7 +11,12 @@ Rails.application.routes.draw do
   resources :orders
   resources :products
   resources :products_carts
-  resources :carts
+  resource :cart, only: [:show] do
+    post 'add/:id', to: 'carts#add', as: 'add_to'
+    delete 'remove/:id', to: 'carts#remove', as: 'remove_from'
+    patch 'update/:id', to: 'carts#update', as: 'update'
+  end
+  
   resources :categories
 
   get 'about', to: 'pages#about'
