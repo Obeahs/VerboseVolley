@@ -1,3 +1,17 @@
 <h1><%= @category.category_name %></h1>
 
-<%= link_to 'Back', categories_path, class: 'btn btn-secondary' %>
+<h2>Products in this Category:</h2>
+
+<% if @products.any? %>
+  <ul>
+    <% @products.each do |product| %>
+      <li>
+        <h3><%= product.product_name %></h3>
+        <p>Price: $<%= product.price %></p>
+        <p>Description: <%= product.description %></p>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>No products found in this category.</p>
+<% end %>

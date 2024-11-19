@@ -23,11 +23,12 @@
   }
 
   nav {
+    position: relative;
     background-color: #3C3744; 
     position: fixed;
     top: 0;
     width: 100%;
-    z-index: 1000; 
+    z-index: 10; 
   }
   
   nav ul {
@@ -173,7 +174,9 @@
   }
 
   .pagination {
+    position: relative;
     display: flex;
+    z-index: 1;
     justify-content: center;
     gap: 10px;
   }
@@ -189,6 +192,10 @@
   .pagination a:hover {
     background-color: #090C9B; 
   }
+  
+  .pagination a.active {
+    background-color: #2C3A9B; /* Slightly darker tone for the active page */
+  }  
   
   footer {
     background-color: #3C3744; 
