@@ -10,6 +10,10 @@ class Order < ApplicationRecord
     ["cart_id", "created_at", "customer_id", "id", "updated_at"]
   end
 
+  def new
+    @provinces = Province.all
+  end
+
   def create_order_items(cart_items)
     cart_items.each do |cart_item|
       order_items.create(
