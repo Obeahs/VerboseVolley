@@ -10,7 +10,7 @@ class Product < ApplicationRecord
   validates_inclusion_of :availability, in: [true, false], message: "must be either available or unavailable"
 
   def self.ransackable_associations(auth_object = nil)
-    ["category", "carts"] 
+    ["category", "carts"]
   end
 
   def self.ransackable_attributes(auth_object = nil)

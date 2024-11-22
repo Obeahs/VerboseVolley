@@ -70,21 +70,29 @@
 
 # puts "Created #{Product.count} products."
 
-require 'csv'
+# require 'csv'
 
-filepath = Rails.root.join('db', 'FIVB scraped.csv')
+# filepath = Rails.root.join('db', 'FIVB scraped.csv')
 
-CSV.foreach(filepath, headers: true) do |row|
-  category_name = determine_category(row['Name'])
+# CSV.foreach(filepath, headers: true) do |row|
+#   category_name = determine_category(row['Name'])
   
-  Product.create!(
-    product_name: row['Name'],
-    category_id: category.id,
-    availability: true, 
-    price: row['Price'].delete_prefix('$').to_d,
-    description: row['Description'],
-    on_sale: false, 
-    new_arrival: true, 
-    recently_updated: false  
-    )
-  end
+#   Product.create!(
+#     product_name: row['Name'],
+#     category_id: category.id,
+#     availability: true, 
+#     price: row['Price'].delete_prefix('$').to_d,
+#     description: row['Description'],
+#     on_sale: false, 
+#     new_arrival: true, 
+#     recently_updated: false  
+#     )
+#   end
+
+Province.create([
+  { name: 'Ontario', gst_rate: 0.05, pst_rate: 0.08, hst_rate: 0.13 },
+  { name: 'Quebec', gst_rate: 0.05, pst_rate: 0.09975, hst_rate: 0 },
+  { name: 'British Columbia', gst_rate: 0.05, pst_rate: 0.07, hst_rate: 0.12 },
+  { name: 'Alberta', gst_rate: 0.05, pst_rate: 0, hst_rate: 0.05 },
+  { name: 'Manitoba', gst_rate: 0.05, pst_rate: 0.07, hst_rate: 0 }
+])

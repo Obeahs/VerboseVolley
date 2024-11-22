@@ -1,10 +1,12 @@
 class Order < ApplicationRecord
   belongs_to :customer
-  belongs_to :cart
+  belongs_to :province
+  belongs_to :cart, optional: true
   has_many :order_items, dependent: :destroy
   has_many :products, through: :order_items
 
   validates :province_id, presence: true
+  validates :total_price, presence: true
 
   def self.ransackable_attributes(auth_object = nil)
     ["cart_id", "created_at", "customer_id", "id", "updated_at"]

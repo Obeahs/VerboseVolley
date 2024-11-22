@@ -2,24 +2,13 @@ class ProductsCart < ApplicationRecord
   belongs_to :product
   belongs_to :cart
 
-  validates :product_id, presence: true
-  validates :cart_id, presence: true
+  validates :quantity, presence: true, numericality: { greater_than_or_equal_to: 1 }
 
-  def self.ransackable_attributes(auth_object = nil)
-    ["cart_id", "created_at", "id", "product_id", "updated_at"]
-  end
+  before_create :set_default_quantity
 
-  def index
-    if params[:category].present?
-      @category = Category.find(params[:category])
-      @products = @category.products.page(params[:page]).per(10)
-    else
-      @products = Product.all.page(params[:page]).per(10)
-  end
+  private
 
-  def show
-    @product = Product.find(params[:id])
+  def set_default_quantity
+    self.quantity ||= 1
   end
-  
 end
-

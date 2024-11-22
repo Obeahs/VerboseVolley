@@ -1,31 +1,27 @@
 class CartsController < ApplicationController
-  def show
-    @cart = session[:cart] || {}
-    @products = Product.find(@cart.keys)
-  end
-
   def add
-    id = params[:id]
-    session[:cart] ||= {}
-    session[:cart][id] ||= 0
-    session[:cart][id] += 1
-    redirect_to cart_path, notice: "Product added to cart"
+    @cart = current_cart
+    @cart.add_product(params[:id])
+    redirect_to cart_path, notice: 'Product added to cart.'
   end
 
   def remove
-    id = params[:id]
-    session[:cart].delete(id)
-    redirect_to cart_path, notice: "Product removed from cart"
+    @cart = current_cart
+    product_cart = @cart.products_carts.find_by(product_id: params[:id])
+    product_cart.destroy if product_cart
+    redirect_to cart_path, notice: 'Product removed from cart.'
   end
 
   def update
-    id = params[:id]
-    quantity = params[:quantity].to_i
-    if quantity <= 0
-      session[:cart].delete(id)
-    else
-      session[:cart][id] = quantity
+    @cart = current_cart
+    product_cart = @cart.products_carts.find_by(product_id: params[:id])
+    if product_cart
+      product_cart.update(quantity: params[:quantity])
     end
-    redirect_to cart_path, notice: "Cart updated"
+    redirect_to cart_path, notice: 'Cart updated.'
+  end
+
+  def show
+    @cart = current_cart
   end
 end
