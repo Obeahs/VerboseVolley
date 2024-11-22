@@ -4,6 +4,8 @@ class Order < ApplicationRecord
   has_many :order_items, dependent: :destroy
   has_many :products, through: :order_items
 
+  validates :province_id, presence: true
+
   def self.ransackable_attributes(auth_object = nil)
     ["cart_id", "created_at", "customer_id", "id", "updated_at"]
   end

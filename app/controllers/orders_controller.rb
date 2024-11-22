@@ -13,7 +13,7 @@ class OrdersController < ApplicationController
   
       if @order.save
         session[:cart] = nil
-        redirect_to @order, notice: 'Order successfully created.'
+        redirect_to @order, notice: 'Order successfully created. Your items will be shipped to the nearest pickup location in your province.'
       else
         render :new
       end
@@ -22,7 +22,7 @@ class OrdersController < ApplicationController
     private
   
     def order_params
-      params.require(:order).permit(:customer_id, :address, :province_id)
+      params.require(:order).permit(:province_id)
     end
   
     def calculate_total_price
