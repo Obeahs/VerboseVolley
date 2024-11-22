@@ -47,4 +47,12 @@ class CategoriesController < ApplicationController
   def category_params
     params.require(:category).permit(:category_name)
   end
+
+  def set_customer 
+    @customer = Customer.find(params[:id]) 
+  end 
+  
+  def customer_params 
+    params.require(:customer).permit(:customer_name, :email, :password, :phone_number)
+  end
 end

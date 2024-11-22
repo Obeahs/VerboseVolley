@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
 
   devise_for :customers
-
+  
   resources :customers
   resources :orders
   resources :products

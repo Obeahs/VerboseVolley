@@ -12,7 +12,6 @@
   <%= stylesheet_link_tag 'application', media: 'all' %>
   <%= javascript_include_tag 'application' %>
 </head>
-
 <body>
   <nav>
     <ul>
@@ -23,15 +22,13 @@
       <li><%= link_to 'Contact', contact_path %></li>
       <% if customer_signed_in? %>
         <li><%= link_to 'My Account', customer_path(current_customer) %></li>
-        <li><%= link_to 'Logout', destroy_customer_session_path, method: :delete %></li>
+        <li><%= link_to "Sign out", destroy_customer_session_path, method: :delete %></li>
       <% else %>
         <li><%= link_to 'Login', new_customer_session_path %></li>
         <li><%= link_to 'Sign Up', new_customer_registration_path %></li>
       <% end %>
     </ul>
   </nav>
-
-
 
   <main>
     <%= yield %> <!-- This renders the page content -->
