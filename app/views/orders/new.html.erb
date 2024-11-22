@@ -1,0 +1,57 @@
+<h1>New Order</h1>
+
+<%= form_for(@order) do |f| %>
+  <% if @order.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@order.errors.count, "error") %> prohibited this order from being saved:</h2>
+
+      <ul>
+      <% @order.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :address %><br>
+    <%= f.text_area :address %>
+  </div>
+
+  <div class="field">
+    <%= f.label :province_id, "Province" %><br>
+    <%= f.collection_select :province_id, @provinces, :id, :name %>
+  </div>
+
+  <h2>Your Cart</h2>
+  <% if @cart.empty? %>
+    <p>Your cart is empty.</p>
+  <% else %>
+    <table>
+      <thead>
+        <tr>
+          <th>Product</th>
+          <th>Quantity</th>
+          <th>Price</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @cart.each do |id, quantity| %>
+          <% product = Product.find(id) %>
+          <tr>
+            <td><%= product.product_name %></td>
+            <td><%= quantity %></td>
+            <td>$<%= product.price %></td>
+            <td>$<%= product.price * quantity %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <p>Total Price: $<%= @cart.sum { |id, quantity| Product.find(id).price * quantity } %></p>
+  <% end %>
+
+  <div class="actions">
+    <%= f.submit "Place Order" %>
+  </div>
+<% end %>
