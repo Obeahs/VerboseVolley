@@ -1,46 +1,20 @@
-class OrdersController < ApplicationController
-  before_action :authenticate_customer!
+class Order < ApplicationRecord
+  belongs_to :customer
+  belongs_to :cart
+  has_many :order_items, dependent: :destroy
+  has_many :products, through: :order_items
 
-  def new
-    @order = Order.new
-    @cart = current_cart
-    @provinces = Province.all
+  def self.ransackable_attributes(auth_object = nil)
+    ["cart_id", "created_at", "customer_id", "id", "updated_at"]
   end
 
-  def create
-    @order = current_customer.orders.build(order_params)
-    @order.total_price = calculate_total_price
-
-    if @order.save
-      session[:cart] = nil
-      redirect_to @order, notice: 'Order successfully created.'
-    else
-      render :new
+  def create_order_items(cart_items)
+    cart_items.each do |cart_item|
+      order_items.create(
+        product: cart_item.product,
+        quantity: cart_item.quantity,
+        price: cart_item.product.price
+      )
     end
-  end
-
-  private
-
-  def order_params
-    params.require(:order).permit(:customer_id, :address, :province_id)
-  end
-
-  def calculate_total_price
-    cart = session[:cart] || {}
-    total = 0
-    cart.each do |id, quantity|
-      product = Product.find(id)
-      total += product.price * quantity
-    end
-    total += calculate_taxes(total)
-    total
-  end
-
-  def calculate_taxes(total)
-    province = Province.find(order_params[:province_id])
-    gst = province.gst_rate * total
-    pst = province.pst_rate * total
-    hst = province.hst_rate * total
-    gst + pst + hst
   end
 end
