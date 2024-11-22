@@ -9,6 +9,7 @@ gem 'pundit'
 gem "sassc-rails"
 
 gem "devise"
+gem 'turbolinks', '~> 5'
 
 gem 'kaminari'
 

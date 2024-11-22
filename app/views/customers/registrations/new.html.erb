@@ -1,13 +1,21 @@
 <h2>Sign up</h2>
 
-<%= form_for(resource, as: resource_name, url: new_customer_registration_path) do |f| %>
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
   <%= render "devise/shared/error_messages", resource: resource %>
 
-  <%= render "shared/customer_form", f: f %>
+  <div class="field">
+    <%= f.label :customer_name %><br />
+    <%= f.text_field :customer_name, autofocus: true %>
+  </div>
+
+  <div class="field">
+    <%= f.label :phone_number %><br />
+    <%= f.telephone_field :phone_number, autocomplete: "tel" %>
+  </div>
 
   <div class="field">
     <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+    <%= f.email_field :email, autocomplete: "email" %>
   </div>
 
   <div class="field">
