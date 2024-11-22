@@ -16,16 +16,14 @@
   <div class="field">
     <%= f.label :province_id, "Province for Pickup" %><br>
     <% if @provinces.present? %>
-      <%= f.collection_select :province_id, @provinces, :id, :name %>
+      <%= f.collection_select :province_id, @provinces, :id, :label_method, {}, { onchange: "this.form.submit();" } %>
     <% else %>
       <p>No provinces available</p>
     <% end %>
   </div>
 
   <h2>Your Cart</h2>
-  <% if @cart.empty? %>
-    <p>Your cart is empty.</p>
-  <% else %>
+  <% if @cart.present? && @cart.any? %>
     <table>
       <thead>
         <tr>
@@ -47,7 +45,13 @@
         <% end %>
       </tbody>
     </table>
-    <p>Total Price: $<%= @cart.sum { |id, quantity| Product.find(id).price * quantity } %></p>
+    <p>Subtotal: $<%= @cart.sum { |id, quantity| Product.find(id).price * quantity } %></p>
+    <% if @order.province_id.present? %>
+      <p>Taxes: $<%= calculate_taxes(@cart.sum { |id, quantity| Product.find(id).price * quantity }, @order.province_id) %></p>
+      <p>Total Price: $<%= @cart.sum { |id, quantity| Product.find(id).price * quantity } + calculate_taxes(@cart.sum { |id, quantity| Product.find(id).price * quantity }, @order.province_id) %></p>
+    <% end %>
+  <% else %>
+    <p>Your cart is empty.</p>
   <% end %>
 
   <div class="actions">
