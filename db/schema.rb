@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_11_22_052854) do
+ActiveRecord::Schema[7.2].define(version: 2024_11_24_230803) do
   create_table "active_admin_comments", force: :cascade do |t|
     t.string "namespace"
     t.text "body"
@@ -78,6 +78,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_22_052854) do
   end
 
   create_table "customers", force: :cascade do |t|
+    t.string "customer_name"
     t.string "email", default: "", null: false
     t.string "password"
     t.string "phone_number"
@@ -87,7 +88,8 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_22_052854) do
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.string "customer_name"
+    t.string "address"
+    t.integer "province_id"
     t.index ["email"], name: "index_customers_on_email", unique: true
     t.index ["reset_password_token"], name: "index_customers_on_reset_password_token", unique: true
   end
