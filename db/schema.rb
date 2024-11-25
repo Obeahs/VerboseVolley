@@ -78,7 +78,6 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_24_230803) do
   end
 
   create_table "customers", force: :cascade do |t|
-    t.string "customer_name"
     t.string "email", default: "", null: false
     t.string "password"
     t.string "phone_number"
@@ -88,6 +87,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_24_230803) do
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
+    t.string "customer_name"
     t.string "address"
     t.integer "province_id"
     t.index ["email"], name: "index_customers_on_email", unique: true
@@ -102,6 +102,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_24_230803) do
     t.string "address"
     t.integer "province_id"
     t.decimal "total_price"
+    t.string "status"
     t.index ["cart_id"], name: "index_orders_on_cart_id"
     t.index ["customer_id"], name: "index_orders_on_customer_id"
   end
