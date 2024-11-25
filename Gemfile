@@ -11,7 +11,11 @@ gem "sassc-rails"
 gem "devise"
 gem 'turbolinks', '~> 5'
 
+gem 'stripe'
+
 gem 'kaminari'
+
+ gem 'dotenv-rails', groups: [:development, :test]
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.2.1"

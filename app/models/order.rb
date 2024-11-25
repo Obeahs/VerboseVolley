@@ -5,6 +5,8 @@ class Order < ApplicationRecord
   has_many :products_carts, dependent: :destroy
   has_many :products, through: :products_carts
 
+  attr_accessor :credit_card_number, :expiration_date, :cvv
+
   validates :province_id, presence: true
   validates :total_price, presence: true
 
@@ -23,7 +25,7 @@ class Order < ApplicationRecord
       products_carts.create!(
         product: cart_item.product,
         quantity: cart_item.quantity,
-        cart: cart,
+        cart_id: cart_item.cart_id,
         order: self
       )
     end

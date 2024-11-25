@@ -11,14 +11,13 @@ class OrdersController < ApplicationController
   def create
     @cart = current_customer.cart
     @order = current_customer.orders.build(order_params)
-    @order.cart_id = @cart.id # Ensure cart_id is set on the order
+    @order.cart_id = @cart.id
     @order.total_price = calculate_total_price
-    @order.status = 'pending'
 
     if @order.save
       @order.add_cart_items(@cart)
-      @cart.products_carts.destroy_all
-      redirect_to @order, notice: 'Order successfully created.'
+      clear_cart(@cart)
+      redirect_to @order, notice: 'Order successfully placed.'
     else
       render :new
     end
@@ -28,10 +27,6 @@ class OrdersController < ApplicationController
     @order = current_customer.orders.find(params[:id])
   end
 
-  def index
-    @orders = current_customer.orders
-  end
-
   private
 
   def set_cart
@@ -39,7 +34,7 @@ class OrdersController < ApplicationController
   end
 
   def order_params
-    params.require(:order).permit(:address, :province_id, :cart_id)
+    params.require(:order).permit(:address, :province_id, :cart_id, :credit_card_number, :expiration_date, :cvv)
   end
 
   def calculate_total_price
@@ -54,6 +49,10 @@ class OrdersController < ApplicationController
     pst = province.pst_rate * subtotal
     hst = province.hst_rate * subtotal
     gst + pst + hst
+  end
+
+  def clear_cart(cart)
+    cart.products_carts.destroy_all
   end
 
   include OrdersHelper

@@ -28,4 +28,9 @@ class CartsController < ApplicationController
     current_customer.cart.delete_all_products
     redirect_to cart_path, notice: 'All items have been removed from your cart.'
   end
+
+  def save_and_create_new_cart
+    current_cart = current_customer.cart
+    current_customer.update(cart: Cart.create(customer: current_customer))
+  end
 end

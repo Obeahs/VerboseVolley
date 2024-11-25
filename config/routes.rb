@@ -18,6 +18,11 @@ Rails.application.routes.draw do
     collection do
       get 'past_orders'
     end
+
+    member do
+      get 'new_payment'
+      post 'create_payment'
+    end
   end
   resources :products
   resources :products_carts

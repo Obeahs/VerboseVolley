@@ -43,7 +43,7 @@ ActiveAdmin.register Order do
     end
 
     panel "Products in Order" do
-      table_for order.cart.products_carts do
+      table_for order.products_carts do
         column "Product" do |item|
           item.product.product_name
         end
