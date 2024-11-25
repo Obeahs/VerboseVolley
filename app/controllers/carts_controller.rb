@@ -1,38 +1,31 @@
 class CartsController < ApplicationController
-  before_action :initialize_cart, only: [:add, :remove, :update, :show]
+  before_action :authenticate_customer!
 
   def show
-    @products = Product.where(id: @cart.keys)
+    @cart = current_customer.cart || Cart.create(customer: current_customer)
+    @products = @cart.products_carts.map(&:product) || []
   end
 
   def add
-    id = params[:id]
-    @cart[id] ||= 0
-    @cart[id] += 1
-    redirect_to cart_path, notice: "Product added to cart"
+    product = Product.find(params[:id])
+    current_customer.cart.add_product(product.id)
+    redirect_to cart_path
   end
 
   def remove
-    id = params[:id]
-    @cart.delete(id)
-    redirect_to cart_path, notice: "Product removed from cart"
+    product = Product.find(params[:id])
+    current_customer.cart.remove_product(product.id)
+    redirect_to cart_path
   end
 
   def update
-    id = params[:id]
-    quantity = params[:quantity].to_i
-    if quantity <= 0
-      @cart.delete(id)
-    else
-      @cart[id] = quantity
-    end
-    redirect_to cart_path, notice: "Cart updated"
+    product = Product.find(params[:id])
+    current_customer.cart.update_product(product.id, params[:quantity].to_i)
+    redirect_to cart_path
   end
 
-  private
-
-  def initialize_cart
-    session[:cart] ||= {}
-    @cart = session[:cart]
+  def delete_all_products
+    current_customer.cart.delete_all_products
+    redirect_to cart_path, notice: 'All items have been removed from your cart.'
   end
 end

@@ -1,68 +1,51 @@
-<h1>New Order</h1>
+<h1>Checkout</h1>
 
-<% if customer_signed_in? %>
-  <%= form_with(model: @order, local: true) do |form| %>
-    <% if @order.errors.any? %>
-      <div id="error_explanation">
-        <h2><%= pluralize(@order.errors.count, "error") %> prohibited this order from being saved:</h2>
-        <ul>
-          <% @order.errors.full_messages.each do |message| %>
-            <li><%= message %></li>
-          <% end %>
-        </ul>
-      </div>
-    <% end %>
-
-    <div class="field">
-      <%= form.label :customer_name %>
-      <%= form.text_field :customer_name, value: current_customer.customer_name, readonly: true %>
-    </div>
-
-    <div class="field">
-      <%= form.label :address %>
-      <%= form.text_field :address, value: current_customer.address %>
-    </div>
-
-    <div class="field">
-      <%= form.label :province_id, "Province" %>
-      <%= form.collection_select :province_id, Province.all, :id, :name, selected: current_customer.province_id %>
-    </div>
-
-    <h2>Your Shopping Cart</h2>
-
-    <% if @cart.empty? %>
-      <p>Your cart is empty.</p>
-    <% else %>
-      <table class="cart-table">
-        <thead>
-          <tr>
-            <th>Product</th>
-            <th>Quantity</th>
-            <th>Price</th>
-            <th>Total</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% @cart.each do |id, quantity| %>
-            <% product = @products.find { |p| p.id == id.to_i } %>
-            <tr>
-              <td><%= product.product_name %></td>
-              <td><%= quantity %></td>
-              <td>$<%= product.price %></td>
-              <td>$<%= product.price * quantity %></td>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
-      <p class="cart-subtotal">Subtotal: $<%= @subtotal %></p>
-      <p class="cart-taxes">Estimated Taxes: $<%= @taxes %></p>
-      <p class="cart-total">Total: $<%= @total %></p>
-    <% end %>
-
-    <div class="actions">
-      <%= form.submit "Create Order" %>
-    </div>
-  <% end %>
+<% if @cart.empty? %>
+  <p>Your cart is empty.</p>
 <% else %>
-  <p>You need to be logged in to create an order. Please <%= link_to 'sign in', new_customer_session_path %>.</p>
+  <table class="cart-table">
+    <thead>
+      <tr>
+        <th>Product</th>
+        <th>Quantity</th>
+        <th>Price</th>
+        <th>Total</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @cart.products_carts.each do |cart_item| %>
+        <% product = cart_item.product %>
+        <tr>
+          <td><%= product.product_name %></td>
+          <td><%= cart_item.quantity %></td>
+          <td>$<%= product.price %></td>
+          <td>$<%= product.price * cart_item.quantity %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <% subtotal = @cart.products_carts.sum { |cart_item| cart_item.product.price * cart_item.quantity } %>
+  <% province = @order.province || current_customer.province %>
+  <% taxes = calculate_taxes(subtotal, province) %>
+  <% total = subtotal + taxes %>
+
+  <p class="cart-subtotal">Subtotal: $<%= subtotal %></p>
+  <p class="cart-taxes">Estimated Taxes: $<%= taxes %></p>
+  <p class="cart-total">Total: $<%= total %></p>
+
+  <div class="cart-actions">
+    <%= form_with(model: @order, local: true) do |form| %>
+      <%= form.hidden_field :cart_id, value: @cart.id %>
+      <div class="form-group">
+        <%= form.label :address %>
+        <%= form.text_field :address, class: 'form-control', value: @order.address %>
+      </div>
+      <div class="form-group">
+        <%= form.label :province_id %>
+        <%= form.collection_select :province_id, Province.all, :id, :name, { include_blank: true, selected: @order.province_id }, class: 'form-control' %>
+      </div>
+      <%= form.submit 'Place Order', class: 'btn btn-primary' %>
+    <% end %>
+  </div>
 <% end %>

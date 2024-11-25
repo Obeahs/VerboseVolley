@@ -1,0 +1,32 @@
+<h1>Order Details</h1>
+
+<p>Order ID: <%= @order.id %></p>
+<p>Customer: <%= @order.customer.email %></p>
+<p>Address: <%= @order.address %></p>
+<p>Province: <%= @order.province.name %></p>
+<p>Status: <%= @order.status %></p>
+
+<h2>Products</h2>
+<table class="cart-table">
+  <thead>
+    <tr>
+      <th>Product</th>
+      <th>Quantity</th>
+      <th>Price</th>
+      <th>Total</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @order.products_carts.each do |order_item| %>
+      <% product = order_item.product %>
+      <tr>
+        <td><%= product.product_name %></td>
+        <td><%= order_item.quantity %></td>
+        <td>$<%= product.price %></td>
+        <td>$<%= product.price * order_item.quantity %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<p class="cart-total">Total Price: $<%= @order.total_price %></p>

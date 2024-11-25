@@ -1,7 +1,7 @@
 class Cart < ApplicationRecord
-  has_many :products_carts
+  belongs_to :customer
+  has_many :products_carts, dependent: :destroy
   has_many :products, through: :products_carts
-  has_one :order
 
   def add_product(product_id)
     if persisted?
@@ -29,5 +29,17 @@ class Cart < ApplicationRecord
 
   def empty?
     products_carts.empty?
+  end
+
+  def delete_all_products
+    products_carts.destroy_all
+  end
+
+  def self.ransackable_associations(auth_object = nil)
+    ["customer", "products", "products_carts"]
+  end
+
+  def self.ransackable_attributes(auth_object = nil)
+    ["created_at", "customer_id", "id", "id_value", "total_price", "updated_at"]
   end
 end

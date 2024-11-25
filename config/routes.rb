@@ -14,7 +14,11 @@ Rails.application.routes.draw do
   end
   
   resources :customers
-  resources :orders
+  resources :orders do
+    collection do
+      get 'past_orders'
+    end
+  end
   resources :products
   resources :products_carts
   resource :cart, only: [:show] do

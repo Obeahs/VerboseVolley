@@ -1,12 +1,14 @@
 ActiveAdmin.register Customer do
   permit_params :customer_name, :email, :password, :phone_number, :address, :province_id
 
+  # Filters section
   filter :customer_name
   filter :email
   filter :phone_number
   filter :address
   filter :province
 
+  # Form for creating/updating customers
   form do |f|
     f.inputs do
       f.input :customer_name, label: 'Customer'
@@ -19,6 +21,7 @@ ActiveAdmin.register Customer do
     f.actions
   end
 
+  # Index page setup
   index do
     selectable_column
     id_column
@@ -30,6 +33,7 @@ ActiveAdmin.register Customer do
     actions
   end
 
+  # Show page setup
   show do
     attributes_table do
       row 'Customer', &:customer_name
