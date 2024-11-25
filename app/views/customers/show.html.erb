@@ -15,5 +15,14 @@
   <%= @customer.phone_number %>
 </p>
 
-<%= link_to 'Edit', edit_customer_path(@customer) %> |
-<%= link_to 'Back', customers_path %>
+<p>
+  <strong>Address:</strong>
+  <%= @customer.address %>
+</p>
+
+<p>
+  <strong>Province:</strong>
+  <%= @customer.province.name if @customer.province.present? %>
+</p>
+
+<%= link_to 'Back', root_path %>

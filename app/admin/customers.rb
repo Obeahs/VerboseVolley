@@ -9,7 +9,7 @@ ActiveAdmin.register Customer do
 
   form do |f|
     f.inputs do
-      f.input :customer_name
+      f.input :customer_name, label: 'Customer'
       f.input :email
       f.input :password
       f.input :phone_number
@@ -22,21 +22,21 @@ ActiveAdmin.register Customer do
   index do
     selectable_column
     id_column
-    column :customer_name
+    column 'Customer', :customer_name
+    column 'Address', :address
+    column 'Province', :province
     column :email
     column :phone_number
-    column :address
-    column :province
     actions
   end
 
   show do
     attributes_table do
-      row :customer_name
+      row 'Customer', &:customer_name
+      row 'Address', &:address
+      row 'Province', &:province
       row :email
       row :phone_number
-      row :address
-      row :province
     end
     active_admin_comments
   end

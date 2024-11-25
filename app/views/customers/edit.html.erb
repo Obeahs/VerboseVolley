@@ -1,0 +1,53 @@
+<h2>Edit Your Profile</h2>
+
+<%= form_for(@customer, url: customer_path(@customer), html: { method: :put }) do |f| %>
+  <%= render 'shared/error_messages', object: @customer %>
+
+  <div class="field">
+    <%= f.label :customer_name %><br />
+    <%= f.text_field :customer_name %>
+  </div>
+
+  <div class="field">
+    <%= f.label :email %><br />
+    <%= f.email_field :email %>
+  </div>
+
+  <div class="field">
+    <%= f.label :password, "New Password" %><br />
+    <%= f.password_field :password %>
+    <small>Leave blank if you don't want to change it</small>
+  </div>
+
+  <div class="field">
+    <%= f.label :password_confirmation, "Confirm New Password" %><br />
+    <%= f.password_field :password_confirmation %>
+  </div>
+
+  <div class="field">
+    <%= f.label :current_password, "Current Password" %><br />
+    <%= f.password_field :current_password %>
+    <small>We need your current password to confirm your changes</small>
+  </div>
+
+  <div class="field">
+    <%= f.label :phone_number %><br />
+    <%= f.text_field :phone_number %>
+  </div>
+
+  <div class="field">
+    <%= f.label :address %><br />
+    <%= f.text_field :address %>
+  </div>
+
+  <div class="field">
+    <%= f.label :province_id, "Province" %><br />
+    <%= f.collection_select :province_id, Province.all, :id, :name %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit "Update" %>
+  </div>
+<% end %>
+
+<%= link_to "Back", :back %>

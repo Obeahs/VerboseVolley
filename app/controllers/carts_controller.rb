@@ -1,27 +1,38 @@
 class CartsController < ApplicationController
+  before_action :initialize_cart, only: [:add, :remove, :update, :show]
+
+  def show
+    @products = Product.where(id: @cart.keys)
+  end
+
   def add
-    @cart = current_cart
-    @cart.add_product(params[:id])
-    redirect_to cart_path, notice: 'Product added to cart.'
+    id = params[:id]
+    @cart[id] ||= 0
+    @cart[id] += 1
+    redirect_to cart_path, notice: "Product added to cart"
   end
 
   def remove
-    @cart = current_cart
-    product_cart = @cart.products_carts.find_by(product_id: params[:id])
-    product_cart.destroy if product_cart
-    redirect_to cart_path, notice: 'Product removed from cart.'
+    id = params[:id]
+    @cart.delete(id)
+    redirect_to cart_path, notice: "Product removed from cart"
   end
 
   def update
-    @cart = current_cart
-    product_cart = @cart.products_carts.find_by(product_id: params[:id])
-    if product_cart
-      product_cart.update(quantity: params[:quantity])
+    id = params[:id]
+    quantity = params[:quantity].to_i
+    if quantity <= 0
+      @cart.delete(id)
+    else
+      @cart[id] = quantity
     end
-    redirect_to cart_path, notice: 'Cart updated.'
+    redirect_to cart_path, notice: "Cart updated"
   end
 
-  def show
-    @cart = current_cart
+  private
+
+  def initialize_cart
+    session[:cart] ||= {}
+    @cart = session[:cart]
   end
 end
