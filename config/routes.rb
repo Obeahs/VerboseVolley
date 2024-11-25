@@ -6,11 +6,11 @@ Rails.application.routes.draw do
   get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
   get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
 
-  devise_for :customers, controllers: { registrations: 'registrations' }, skip: [:sessions]
-  as :customer do
-    get 'sign_in', to: 'devise/sessions#new', as: :new_customer_session
-    post 'sign_in', to: 'devise/sessions#create', as: :customer_session
-    delete 'sign_out', to: 'devise/sessions#destroy', as: :destroy_customer_session
+  devise_for :customers, controllers: { registrations: 'registrations' }, skip: [:sessions] 
+  as :customer do 
+    get 'sign_in', to: 'devise/sessions#new', as: :new_customer_session 
+    post 'sign_in', to: 'devise/sessions#create', as: :customer_session 
+    delete 'sign_out', to: 'devise/sessions#destroy', as: :destroy_customer_session 
   end
   
   resources :customers

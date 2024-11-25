@@ -1,5 +1,7 @@
 source "https://rubygems.org"
 
+gem 'bulma'
+
 gem 'activeadmin'
 gem 'devise'
 gem 'cancancan'
